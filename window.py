@@ -54,20 +54,21 @@ win = Window(800, 600)
 
 #main_maze = Maze(20,20,5,8,10,10,win)
 main_maze = Maze(20,20,10,13,15,15,win)
+main_maze.solve()
 
-cell1 = Cell(50,50,60,60,win,True,True,True,True)
-cell2 = Cell(90,50,100,60,win,True,True,True,True)
-cell3 = Cell(100,210,110,220,win,True,True,True,True)
-cell1.draw(win.canvas_widget, "blue")
-cell2.draw(win.canvas_widget, "blue")
-cell3.draw(win.canvas_widget, "blue")
-
-cell1.draw_move(cell2)
-cell2.draw_move(cell3)
-
-point_a = Point(3,3)
-point_b = Point(33,33)
-line_a = Line(point_a, point_b)
-win.draw_line(line_a, "blue")
+#cell1 = Cell(50,50,60,60,win,True,True,True,True)
+#cell2 = Cell(90,50,100,60,win,True,True,True,True)
+#cell3 = Cell(100,210,110,220,win,True,True,True,True)
+#cell1.draw(win.canvas_widget, "blue")
+#cell2.draw(win.canvas_widget, "blue")
+#cell3.draw(win.canvas_widget, "blue")
+#
+#cell1.draw_move(cell2)
+#cell2.draw_move(cell3)
+#
+#point_a = Point(3,3)
+#point_b = Point(33,33)
+#line_a = Line(point_a, point_b)
+#win.draw_line(line_a, "blue")
 
 win.wait_for_close()

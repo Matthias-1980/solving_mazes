@@ -50,11 +50,15 @@ class Maze():
         # then sleep for a short amount of time so your eyes keep up with each render 
         # frame. I slept for 0.05 seconds.
         
+        #if self._win is not None:
+        #    self._win.running = True
+        #    while(self._win.running):
+        #        time.sleep(0.05)
+        #        self._win.redraw()
+
         if self._win is not None:
-            self._win.running = True
-            while(self._win.running):
-                time.sleep(0.05)
-                self._win.redraw()
+            time.sleep(0.15)
+            self._win.redraw()
 
     def _break_entrance_and_exit(self):
         self._cells[0][0].has_top_wall = False
@@ -123,4 +127,43 @@ class Maze():
         for i in range(self._num_cols):
             for j in range(self._num_rows):
                 self._cells[i][j].visited = False
-                        
+
+    def solve(self):
+        return self._solver_r(0,0)
+
+    def _solver_r(self,i,j):
+        self._animate()
+        self._cells[j][i].visited = True
+        if j == self._num_cols - 1 and i == self._num_rows - 1:
+            return True        
+        
+        visit = []
+        if j-1 >= 0:
+            if self._cells[j-1][i].visited == False: 
+                if (self._cells[j][i].has_left_wall == False and 
+                self._cells[j-1][i].has_right_wall == False):
+                    visit.append((j-1,i))
+        if j+1 < self._num_cols:
+            if self._cells[j+1][i].visited == False:
+                if (self._cells[j][i].has_right_wall == False and 
+                self._cells[j+1][i].has_left_wall == False):
+                    visit.append((j+1,i))
+        if i-1 >= 0:
+            if self._cells[j][i-1].visited == False:
+                if (self._cells[j][i].has_top_wall == False and
+                self._cells[j][i-1].has_bottom_wall == False):
+                    visit.append((j,i-1))
+        if i+1 < self._num_rows:
+            if self._cells[j][i+1].visited == False: 
+                if (self._cells[j][i].has_bottom_wall == False and
+                self._cells[j][i+1].has_top_wall == False):
+                    visit.append((j,i+1))
+
+        for dir in visit:
+            self._cells[j][i].draw_move(self._cells[dir[0]][dir[1]])
+            if self._solver_r(dir[1], dir[0]) == True:
+                return True
+            else:
+                self._cells[j][i].draw_move(self._cells[dir[0]][dir[1]], True)
+        
+        return False
