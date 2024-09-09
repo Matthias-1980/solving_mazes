@@ -20,6 +20,10 @@ class Cell():
         
         self.visited = False
 
+    #Assumptions
+    #Expected behaviour
+    # Draws a line from the current cell to another
+    #Encapsulation changes
     def draw_move(self, to_cell, undo=False):
         diff = abs(self._x1 - self._x2) / 2
         new_self_x = 0
@@ -60,7 +64,10 @@ class Cell():
             fill=fill_color, width = 2
         )
 
-        
+    #Assumptions
+    #Expected behaviour
+    # depending on the cell's variables that define if ti has a wall or not, the cell's walls a drawn
+    #Encapsulation change
     def draw(self, canvas, fill_color):
         self.canvas = canvas
         self.fill_color = fill_color        
