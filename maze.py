@@ -23,6 +23,12 @@ class Maze():
 
         self._create_cells()
 
+    #assumptions
+    #expected behaviour
+    # creates and draws up the list of _cells lists.
+    # proceeds to form the maze
+    #encapsulation changes
+    # creates the _cells list of lists
     def _create_cells(self):
         self._cells = [[Cell(i,j,i+self._cell_size_x,j+self._cell_size_y,self._win) for i in range(self._num_rows)]for j in range(self._num_cols)]
         for i in range(self._num_rows):
@@ -34,7 +40,11 @@ class Maze():
         self._reset_cells_visited()
         self._animate()
 
-    # j is rows, i is columns
+    #Assuptions
+    #Expected behaviour
+    # Depending on the maze x y offset (_x1, _y1) the given vells's x y coordinates are defined 
+    #Encapuslation changes
+    # The _cells x y corrdinate that defiens its location on the mpa or grid
     def _draw_cell(self, i, j):
         (self._cells[j][i])._x1 = self._x1 + j*self._cell_size_x
         (self._cells[j][i])._y1 = self._y1 + i*self._cell_size_y
@@ -43,19 +53,11 @@ class Maze():
         if self._win is not None:
             (self._cells[j][i]).draw(self._win.canvas_widget, "blue")
 
+    #Assumptions
+    #Expected behaviour
+    # redraws the window after waiting a few momments
+    #Encapsulation changes
     def _animate(self):
-        #missing animation on 0.05 sec redraw
-        # The animate method is what allows us to visualize what the algorithms 
-        # are doing in real time. It should simply call the window's redraw() method, 
-        # then sleep for a short amount of time so your eyes keep up with each render 
-        # frame. I slept for 0.05 seconds.
-        
-        #if self._win is not None:
-        #    self._win.running = True
-        #    while(self._win.running):
-        #        time.sleep(0.05)
-        #        self._win.redraw()
-
         if self._win is not None:
             time.sleep(0.15)
             self._win.redraw()
@@ -69,6 +71,7 @@ class Maze():
 
     #Asumptions
     #Expected behaviour:
+    # Forms the maze by taking down walls between random _cells that have not been visisted
     #Encapsulation change
     def _break_walls_r(self, i, j):
         self._cells[j][i].visited = True
@@ -123,14 +126,26 @@ class Maze():
                         
             self._break_walls_r(direc[1], direc[0])
 
+    #Assumptions
+    #Expected behaviour
+    # For all _cells reset their boolean variable "visisted" to false
+    #Encapsulation change
+    # Each _cells visited variable
     def _reset_cells_visited(self):
         for i in range(self._num_cols):
             for j in range(self._num_rows):
                 self._cells[i][j].visited = False
 
+
     def solve(self):
         return self._solver_r(0,0)
 
+    #Assumptions
+    #Expected behaviour
+    # depth first recursion that seeks the exit of the maze.
+    # checks for end condiion and proceeds to check out which direction it can go from its current location.
+    # The performs depth first recursion on the directions
+    #Encapusulation change
     def _solver_r(self,i,j):
         self._animate()
         self._cells[j][i].visited = True
